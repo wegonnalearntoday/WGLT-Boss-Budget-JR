@@ -579,6 +579,64 @@ body{
   font-size:.78rem;font-weight:600;line-height:1.5;
 }
 
+/* ── AVATAR PICKER ────────────────────────────────────────────── */
+.avatar-section{
+  background:white;border-radius:var(--radius);padding:24px;
+  box-shadow:var(--shadow);margin-bottom:24px;
+}
+.avatar-section h3{
+  font-family:'Fredoka One',sans-serif;font-size:1.3rem;
+  color:var(--sky);margin-bottom:6px;
+}
+.avatar-section p{font-size:.9rem;color:var(--ink-lt);margin-bottom:14px;font-weight:600;}
+
+.name-row{
+  display:flex;align-items:center;gap:12px;margin-bottom:18px;
+}
+.name-input{
+  flex:1;border:3px solid #E0E0E0;border-radius:var(--radius-sm);
+  padding:10px 16px;font-family:'Nunito',sans-serif;font-size:1rem;
+  font-weight:700;color:var(--ink);background:var(--cream);
+  transition:border-color .2s;outline:none;
+}
+.name-input:focus{border-color:var(--sky);}
+.name-input::placeholder{color:#B0BEC5;font-weight:600;}
+
+.avatar-grid{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:10px;
+}
+.avatar-btn{
+  background:var(--sky-lt);border:3px solid transparent;
+  border-radius:var(--radius-sm);padding:10px 6px;
+  text-align:center;cursor:pointer;
+  transition:all .2s;font-family:'Nunito',sans-serif;
+  position:relative;
+}
+.avatar-btn:hover{transform:scale(1.1);border-color:var(--sky);}
+.avatar-btn.selected{
+  border-color:var(--sky);
+  background:var(--sky);
+  transform:scale(1.1);
+  box-shadow:0 0 0 3px rgba(74,171,219,.3);
+}
+.avatar-btn .av-emoji{font-size:2rem;display:block;line-height:1.2;}
+.avatar-btn .av-name{font-size:.62rem;font-weight:800;color:var(--ink-lt);margin-top:2px;display:block;}
+.avatar-btn.selected .av-name{color:white;}
+
+/* header avatar badge */
+.header-avatar{
+  font-size:1.8rem;line-height:1;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+}
+.header-avatar-name{
+  font-size:.6rem;font-weight:800;color:rgba(255,255,255,.85);
+  text-transform:uppercase;letter-spacing:.5px;max-width:60px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;
+}
+
+/* report card avatar */
+.report-avatar{font-size:4rem;display:block;margin-bottom:8px;animation:bounce 2s ease infinite;}
+
 /* ── RESPONSIVE ───────────────────────────────────────────────── */
 @media(max-width:620px){
   .game-layout{grid-template-columns:1fr;}
@@ -587,6 +645,7 @@ body{
   .spend-items{grid-template-columns:repeat(2,1fr);}
   .report-stats{grid-template-columns:1fr;}
   .header-stats{display:none;}
+  .avatar-grid{grid-template-columns:repeat(4,1fr);}
 }
 </style>
 </head>
@@ -602,7 +661,11 @@ body{
 <div id="app">
   <!-- HEADER -->
   <header class="app-header">
-    <div class="header-logo">🌟</div>
+    <div class="header-logo" id="header-logo">🌟</div>
+    <div class="header-avatar" id="header-avatar" style="display:none">
+      <span id="header-avatar-emoji" style="font-size:1.8rem"></span>
+      <span class="header-avatar-name" id="header-avatar-name"></span>
+    </div>
     <div class="header-text">
       <h1>Budget Boss Jr.</h1>
       <p>WGLT Financial Literacy • Elementary Edition</p>
@@ -627,6 +690,31 @@ body{
       <span class="big-emoji">🌟</span>
       <h2>Welcome to Budget Boss Jr.!</h2>
       <p>Pick a job, earn money, and learn to Save · Spend · Share your way through the season!</p>
+    </div>
+
+    <!-- Avatar + Name Picker -->
+    <div class="avatar-section">
+      <h3>👋 First, Tell Us About You!</h3>
+      <p>Type your name and pick your buddy — they'll cheer you on all season!</p>
+      <div class="name-row">
+        <span style="font-size:1.4rem">✏️</span>
+        <input class="name-input" id="player-name-input" type="text" maxlength="18"
+          placeholder="What's your name?" oninput="onNameInput(this.value)" autocomplete="off" />
+      </div>
+      <div class="avatar-grid" id="avatar-grid">
+        <div class="avatar-btn" onclick="selectAvatar('🦊','Fox')"><span class="av-emoji">🦊</span><span class="av-name">Fox</span></div>
+        <div class="avatar-btn" onclick="selectAvatar('🐸','Frog')"><span class="av-emoji">🐸</span><span class="av-name">Frog</span></div>
+        <div class="avatar-btn" onclick="selectAvatar('🐼','Panda')"><span class="av-emoji">🐼</span><span class="av-name">Panda</span></div>
+        <div class="avatar-btn" onclick="selectAvatar('🦁','Lion')"><span class="av-emoji">🦁</span><span class="av-name">Lion</span></div>
+        <div class="avatar-btn" onclick="selectAvatar('🐶','Pup')"><span class="av-emoji">🐶</span><span class="av-name">Pup</span></div>
+        <div class="avatar-btn" onclick="selectAvatar('🐱','Kitty')"><span class="av-emoji">🐱</span><span class="av-name">Kitty</span></div>
+        <div class="avatar-btn" onclick="selectAvatar('🦄','Unicorn')"><span class="av-emoji">🦄</span><span class="av-name">Unicorn</span></div>
+        <div class="avatar-btn" onclick="selectAvatar('🐯','Tiger')"><span class="av-emoji">🐯</span><span class="av-name">Tiger</span></div>
+        <div class="avatar-btn" onclick="selectAvatar('🦋','Butterfly')"><span class="av-emoji">🦋</span><span class="av-name">Butterfly</span></div>
+        <div class="avatar-btn" onclick="selectAvatar('🐙','Octopus')"><span class="av-emoji">🐙</span><span class="av-name">Octopus</span></div>
+        <div class="avatar-btn" onclick="selectAvatar('🧑‍🚀','Astronaut')"><span class="av-emoji">🧑‍🚀</span><span class="av-name">Astronaut</span></div>
+        <div class="avatar-btn" onclick="selectAvatar('🦸','Hero')"><span class="av-emoji">🦸</span><span class="av-name">Hero</span></div>
+      </div>
     </div>
 
     <!-- Job Picker -->
@@ -805,7 +893,8 @@ body{
   <!-- ── SCREEN 3: END REPORT ── -->
   <div class="screen" id="screen-report">
     <div class="report-card" id="report-card">
-      <h2>🎉 Summer Complete!</h2>
+      <span class="report-avatar" id="report-avatar">🎉</span>
+      <h2 id="report-title">🎉 Summer Complete!</h2>
       <p class="subtitle" id="report-subtitle">You finished all 12 weeks! Here's how you did:</p>
       <div class="report-stars" id="report-stars"></div>
       <div class="report-stats">
@@ -857,6 +946,15 @@ body{
 // STATE
 // ══════════════════════════════════════════════════════════════════
 const TOTAL_WEEKS = 12;
+
+let state = {
+  playerName: '', avatar: '', avatarName: '',
+  job:null, cause:null, causeName:'', goal:20,
+  week:0, jars:{spend:0,save:0,share:0},
+  totalEarned:0, pendingConsequences:[],
+  boughtItems:{}, choiceMade:false,
+  gameActive:false, finalReached:false,
+};
 
 const JOBS = {
   lemon: {
@@ -1220,20 +1318,37 @@ const SHOP_ITEMS = [
 
 const WEEK_EMOJIS = ['☀️','🌤️','⛅','🌡️','🌧️','🌈','🌟','🍂','🎒','🍁','❄️','🏁'];
 
-let state = {
-  job: null,
-  cause: null,
-  causeName: '',
-  goal: 20,
-  week: 0,
-  jars: { spend:0, save:0, share:0 },
-  totalEarned: 0,
-  pendingConsequences: [],  // [{week, emoji, title, body, bonusAmount}]
-  boughtItems: {},
-  choiceMade: false,
-  gameActive: false,
-  finalReached: false,
-};
+// ══════════════════════════════════════════════════════════════════
+// AVATAR & NAME
+// ══════════════════════════════════════════════════════════════════
+function selectAvatar(emoji, name) {
+  state.avatar = emoji;
+  state.avatarName = name;
+  // Update grid selection
+  document.querySelectorAll('.avatar-btn').forEach(b => b.classList.remove('selected'));
+  // Find the clicked button by matching emoji
+  document.querySelectorAll('.avatar-btn').forEach(b => {
+    if (b.querySelector('.av-emoji') && b.querySelector('.av-emoji').textContent === emoji) {
+      b.classList.add('selected');
+    }
+  });
+  checkStartReady();
+}
+
+function onNameInput(val) {
+  state.playerName = val.trim();
+  checkStartReady();
+}
+
+function updateHeaderAvatar() {
+  if (state.avatar) {
+    document.getElementById('header-logo').style.display = 'none';
+    const ha = document.getElementById('header-avatar');
+    ha.style.display = 'flex';
+    document.getElementById('header-avatar-emoji').textContent = state.avatar;
+    document.getElementById('header-avatar-name').textContent = state.playerName || state.avatarName;
+  }
+}
 
 // ══════════════════════════════════════════════════════════════════
 // SETUP
@@ -1261,7 +1376,7 @@ function selectGoal(amount) {
 }
 
 function checkStartReady() {
-  document.getElementById('start-btn').disabled = !(state.job && state.cause && state.goal);
+  document.getElementById('start-btn').disabled = !(state.job && state.cause && state.goal && state.avatar);
 }
 
 // ══════════════════════════════════════════════════════════════════
@@ -1276,9 +1391,11 @@ function startGame() {
   state.gameActive = true;
   state.finalReached = false;
 
+  updateHeaderAvatar();
   showScreen('screen-game');
   document.getElementById('week-progress').style.display = 'flex';
 
+  const greeting = state.playerName ? `Ready, ${state.playerName}? ${state.avatar}` : `Let's go! ${state.avatar}`;
   // Auto-split jar explanation
   showModal('💰', 'How Money Works Here!',
     'When you earn money, it gets split into 3 jars:\n\n' +
@@ -1286,7 +1403,7 @@ function startGame() {
     '🏦 Save — money for your goal\n' +
     '💜 Share — money for ' + state.causeName +
     '\n\nEach week you\'ll earn money and make choices. Ready?',
-    'Let\'s go! 🚀', () => advanceWeek()
+    greeting, () => advanceWeek()
   );
 }
 
@@ -1527,6 +1644,11 @@ function buildReport() {
   const shared = state.jars.share;
   const earned = state.totalEarned;
   const goalHit = saved >= state.goal;
+  const name = state.playerName || 'Budget Boss';
+
+  // Avatar & personalized title
+  document.getElementById('report-avatar').textContent = state.avatar || '🎉';
+  document.getElementById('report-title').textContent = `🎉 Amazing work, ${name}!`;
 
   document.getElementById('rs-earned').textContent = '$' + fmt(earned);
   document.getElementById('rs-saved').textContent  = '$' + fmt(saved);
@@ -1561,7 +1683,7 @@ function buildReport() {
   document.getElementById('badge-sub').textContent   = badge.sub;
 
   document.getElementById('report-subtitle').textContent =
-    `You finished all ${TOTAL_WEEKS} weeks as a ${JOBS[state.job].name}!`;
+    `${name} finished all ${TOTAL_WEEKS} weeks as a ${JOBS[state.job].name}!`;
 }
 
 // ══════════════════════════════════════════════════════════════════
@@ -1736,6 +1858,7 @@ function fmt(n) {
 
 function resetGame() {
   state = {
+    playerName:'', avatar:'', avatarName:'',
     job:null, cause:null, causeName:'', goal:20,
     week:0, jars:{spend:0,save:0,share:0},
     totalEarned:0, pendingConsequences:[],
@@ -1745,8 +1868,13 @@ function resetGame() {
   document.querySelectorAll('.job-card').forEach(c=>c.classList.remove('selected'));
   document.querySelectorAll('.cause-btn').forEach(b=>b.classList.remove('selected'));
   document.querySelectorAll('.goal-btn').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('.avatar-btn').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('player-name-input').value = '';
   document.getElementById('start-btn').disabled = true;
   document.getElementById('week-progress').style.display = 'none';
+  // Restore header logo
+  document.getElementById('header-logo').style.display = '';
+  document.getElementById('header-avatar').style.display = 'none';
   document.getElementById('ledger-entries').innerHTML =
     '<div class="ledger-entry event"><span class="l-emoji">🌟</span><span class="l-text">Game started! Good luck!</span><span class="l-amount"></span></div>';
   showScreen('screen-welcome');
