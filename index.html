@@ -3,106 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WGLT Budget Boss Jr. Launcher</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <title>WGLT Budget Boss Jr</title>
   <style>
-    :root{
-      --sun:#FFB800;
-      --sky:#4AABDB;
-      --grass:#5DBB63;
-      --purple:#7B5EA7;
-      --cream:#FFFBF0;
-      --ink:#2C3E50;
-      --white:#ffffff;
-      --shadow:0 10px 30px rgba(44,62,80,.14);
-      --radius:24px;
+    body {
+      margin: 0; min-height: 100vh; display:flex; align-items:center; justify-content:center;
+      font-family: Arial, sans-serif; color:#fff;
+      background: linear-gradient(135deg,#0b1220,#12243a 45%,#193d2f 100%);
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family:'Nunito',sans-serif;
-      color:var(--ink);
-      background:linear-gradient(180deg,#dff3fb 0%, #fffbf0 42%, #e6f5e7 100%);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-      overflow:hidden;
+    .card {
+      width:min(92vw,720px); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14);
+      border-radius:24px; padding:32px 24px; box-shadow:0 18px 50px rgba(0,0,0,.35); text-align:center;
+      backdrop-filter: blur(8px);
     }
-    .cloud{position:fixed;background:rgba(255,255,255,.75);border-radius:999px;filter:blur(1px);}
-    .cloud::before,.cloud::after{content:"";position:absolute;background:inherit;border-radius:50%;}
-    .c1{width:180px;height:54px;top:8%;left:8%;}
-    .c1::before{width:70px;height:70px;left:18px;top:-25px}.c1::after{width:58px;height:58px;left:76px;top:-18px}
-    .c2{width:220px;height:62px;top:16%;right:10%;}
-    .c2::before{width:80px;height:80px;left:22px;top:-30px}.c2::after{width:65px;height:65px;left:96px;top:-22px}
-    .wrap{width:min(860px,100%);position:relative;z-index:1}
-    .hero{
-      background:rgba(255,255,255,.88);
-      backdrop-filter:blur(6px);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:32px;
-      text-align:center;
-      border:4px solid rgba(255,255,255,.7);
+    h1 { margin:0 0 10px; font-size: clamp(2rem, 5vw, 3.2rem); }
+    p { margin:0 0 28px; color:#d9e6f2; font-size:1.05rem; }
+    .btns { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+    a.btn {
+      display:block; padding:18px 20px; border-radius:18px; text-decoration:none; color:#fff; font-weight:700;
+      box-shadow:0 10px 24px rgba(0,0,0,.25); transition:transform .15s ease, box-shadow .15s ease;
     }
-    .badge{
-      display:inline-flex;align-items:center;gap:10px;
-      background:#fff7d6;border:2px solid rgba(255,184,0,.35);border-radius:999px;
-      padding:10px 18px;font-weight:900;color:#916600;margin-bottom:18px;
-    }
-    h1{
-      margin:0 0 10px;
-      font-family:'Fredoka',sans-serif;
-      font-size:clamp(2rem,4vw,3.25rem);
-      line-height:1.05;
-    }
-    p{margin:0 auto 26px;max-width:640px;font-size:1.05rem;font-weight:700;color:#5a6b7a}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:10px}
-    .card{
-      display:block;text-decoration:none;color:inherit;background:var(--white);border-radius:22px;
-      padding:24px;border:3px solid transparent;box-shadow:0 8px 22px rgba(44,62,80,.10);
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
-    .card:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(44,62,80,.16)}
-    .card.student:hover{border-color:var(--grass)}
-    .card.teacher:hover{border-color:var(--purple)}
-    .emoji{font-size:3rem;display:block;margin-bottom:10px}
-    .title{font-family:'Fredoka',sans-serif;font-size:1.55rem;margin-bottom:6px}
-    .student .title{color:var(--grass)}
-    .teacher .title{color:var(--purple)}
-    .desc{font-size:.98rem;font-weight:700;color:#5a6b7a;min-height:48px}
-    .cta{margin-top:16px;display:inline-block;padding:10px 16px;border-radius:999px;font-weight:900}
-    .student .cta{background:#e6f5e7;color:#2f7d36}
-    .teacher .cta{background:#ede7f6;color:#65448f}
-    .footer{margin-top:18px;font-size:.95rem;font-weight:800;color:#6f7d8a}
-    @media (max-width:700px){.grid{grid-template-columns:1fr}.hero{padding:24px}}
+    a.btn:hover { transform: translateY(-2px); box-shadow:0 14px 28px rgba(0,0,0,.32); }
+    .student { background: linear-gradient(135deg,#16a34a,#22c55e); }
+    .teacher { background: linear-gradient(135deg,#ca8a04,#facc15); color:#17202a; }
+    .note { margin-top:20px; font-size:.95rem; color:#bfd0df; }
   </style>
 </head>
 <body>
-  <div class="cloud c1"></div>
-  <div class="cloud c2"></div>
-  <div class="wrap">
-    <section class="hero">
-      <div class="badge">🌟 WGLT Budget Boss Jr. • Jr-only launcher</div>
-      <h1>Pick your Jr. path</h1>
-      <p>This version opens only the Budget Boss Jr. experience, with just two doors at the front: one for students and one for teachers.</p>
-      <div class="grid">
-        <a class="card student" href="budget-boss-jr.html?teacher=0&role=student&experience=jr">
-          <span class="emoji">🧒</span>
-          <div class="title">Student Jr.</div>
-          <div class="desc">Jump straight into the kid-friendly Budget Boss Jr. game.</div>
-          <span class="cta">Start Student Jr.</span>
-        </a>
-        <a class="card teacher" href="budget-boss-jr.html?teacher=1&role=teacher&experience=jr">
-          <span class="emoji">👩‍🏫</span>
-          <div class="title">Teacher Jr.</div>
-          <div class="desc">Open the Jr. version with the teacher tools and classroom controls turned on.</div>
-          <span class="cta">Start Teacher Jr.</span>
-        </a>
-      </div>
-      <div class="footer">Inside the game, “Jr Menu” now returns here instead of the full app.</div>
-    </section>
+  <div class="card">
+    <h1>💸 WGLT Budget Boss Jr.</h1>
+    <p>Jr-only launcher with just the two modes you asked for.</p>
+    <div class="btns">
+      <a class="btn student" href="budget-boss-jr.html?mode=student-jr">🎒 Student Jr.</a>
+      <a class="btn teacher" href="budget-boss-jr.html?mode=teacher-jr">🧑🏾‍🏫 Teacher Jr.</a>
+    </div>
+    <div class="note">All supporting JSON/data and JS files are included in this folder.</div>
   </div>
 </body>
 </html>
